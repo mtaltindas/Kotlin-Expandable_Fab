@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'com.altindas.expandable_fab'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.altindas.expandable_fab"
