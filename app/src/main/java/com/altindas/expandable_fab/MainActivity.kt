@@ -8,6 +8,7 @@ import android.view.animation.AnimationUtils
 import android.widget.TextView
 import android.widget.Toast
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.altindas.expandable_fab.databinding.ActivityMainBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
@@ -17,43 +18,39 @@ class MainActivity : AppCompatActivity() {
     private val fromBottom: Animation by lazy { AnimationUtils.loadAnimation(this,R.anim.from_bottom_anim) }
     private val toBottom: Animation by lazy { AnimationUtils.loadAnimation(this,R.anim.to_bottom_anim) }
 
-    lateinit var add_btn:FloatingActionButton
-    lateinit var edit_btn:FloatingActionButton
-    lateinit var image_btn:FloatingActionButton
 
-    lateinit var refreshLayout:SwipeRefreshLayout
-    lateinit var textView: TextView
+    private lateinit var binding: ActivityMainBinding
+
+
 
 
     private var clicked =false
     private var number=0;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        add_btn=findViewById<FloatingActionButton>(R.id.add_btn)
-        edit_btn=findViewById<FloatingActionButton>(R.id.edit_btn)
-        image_btn=findViewById<FloatingActionButton>(R.id.image_btn)
 
-        textView=findViewById<TextView>(R.id.textView)
-        refreshLayout=findViewById<SwipeRefreshLayout>(R.id.refreshLayout)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
 
-        add_btn.setOnClickListener {
+
+        binding.addBtn.setOnClickListener {
             onAddButtonClicked()
 
         }
-        edit_btn.setOnClickListener {
+        binding.editBtn.setOnClickListener {
             Toast.makeText(this,"edit",Toast.LENGTH_SHORT).show()
 
         }
-        image_btn.setOnClickListener {
+        binding.imageBtn.setOnClickListener {
             Toast.makeText(this,"img",Toast.LENGTH_SHORT).show()
         }
 
-        refreshLayout.setOnRefreshListener {
+        binding.refreshLayout.setOnRefreshListener {
             number++
-            textView.setText(number.toString())
-            refreshLayout.isRefreshing=false
+            binding.textView.setText(number.toString())
+            binding.refreshLayout.isRefreshing=false
         }
 
     }
@@ -64,23 +61,23 @@ class MainActivity : AppCompatActivity() {
     }
     private fun setVisibility(clicked:Boolean){
         if(!clicked){
-            edit_btn.visibility= View.VISIBLE
-            image_btn.visibility=View.VISIBLE
+            binding.editBtn.visibility= View.VISIBLE
+            binding.imageBtn.visibility=View.VISIBLE
         }else{
-            edit_btn.visibility= View.INVISIBLE
-            image_btn.visibility=View.INVISIBLE
+            binding.editBtn.visibility= View.INVISIBLE
+            binding.imageBtn.visibility=View.INVISIBLE
         }
 
     }
     private fun setAnimation(clicked: Boolean){
         if(!clicked){
-            edit_btn.startAnimation(fromBottom)
-            image_btn.startAnimation(fromBottom)
-            add_btn.startAnimation(rotateOpen)
+            binding.editBtn.startAnimation(fromBottom)
+            binding.imageBtn.startAnimation(fromBottom)
+            binding.addBtn.startAnimation(rotateOpen)
         }else{
-            edit_btn.startAnimation(toBottom)
-            image_btn.startAnimation(toBottom)
-            add_btn.startAnimation(rotateClose)
+            binding.editBtn.startAnimation(toBottom)
+            binding.imageBtn.startAnimation(toBottom)
+            binding.addBtn.startAnimation(rotateClose)
         }
 
     }
